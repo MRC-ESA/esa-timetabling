@@ -1,0 +1,27 @@
+{% extends "base.html" %} {% block head %}
+<title>Parents Evening Booking</title>
+{% endblock %} {% block content %}
+<div class="container">
+  <h1>Parents Evening Booking Form</h1>
+  <form id="booking-form">
+    <label for="parent-name">Parent Name:</label>
+    <input type="text" id="parent-name" name="parent-name" required />
+
+    <label for="student-name">Student Name:</label>
+    <input type="text" id="student-name" name="student-name" required />
+
+    <label for="date">Date:</label>
+    <input type="date" id="date" name="date" required />
+
+    <label for="time">Time:</label>
+    <input type="time" id="time" name="time" required />
+
+    <button type="button" onclick="bookAppointment()">Book Appointment</button>
+  </form>
+
+  <h2>Booking Details</h2>
+  <pre id="booking-details"></pre>
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+{% endblock %}
