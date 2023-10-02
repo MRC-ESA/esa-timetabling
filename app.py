@@ -1,7 +1,6 @@
-from flask import Flask, send_from_directory, render_template
+from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, time
-import os
 
 # create a new Flask application instance
 app = Flask(__name__)
@@ -14,9 +13,10 @@ db = SQLAlchemy(app)
 
 # define a new database model for bookings
 class Bookings(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    booking_id = db.Column(db.Integer, primary_key=True)
     parent_name = db.Column(db.String(80), nullable=False)
     student_name = db.Column(db.String(80), nullable=False)
+    teacher = db.Column(db.String(80), nullable=False)
     date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     time = db.Column(db.Time, nullable=False, default=time.min)
     def __repr__(self):
