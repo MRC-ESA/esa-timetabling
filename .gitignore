@@ -1,2 +1,26 @@
-env/
+# Python bytecode
 __pycache__/
+*.pyc
+
+# Virtual environment
+venv/
+env/
+
+# IDE files
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Compiled Python files
+*.pyc
+
+# SQLite database
+*.db
+
+# Other generated files
+*.pyo
+*.egg-info/
+dist/
+build/
