@@ -7,7 +7,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///bookingsdb.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-# Ceate the database schema
+# Create the database schema
 class Teacher(db.Model):
     teacher_id = db.Column(db.Integer, primary_key=True)
     teacher_first_name = db.Column(db.String(50), nullable=False)
