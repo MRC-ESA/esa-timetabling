@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='style.css') }}"
+      href="{{ url_for('static', filename='styles/main.css') }}"
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -34,15 +34,13 @@
         <label for="time">Time:</label>
         <input type="time" id="time" name="time" required />
 
-        <button type="button" onclick="bookAppointment()">
-          Book Appointment
-        </button>
+        <button type="button" id="book-appointment">Book Appointment</button>
       </form>
 
       <h2>Booking Details</h2>
       <pre id="booking-details"></pre>
     </div>
 
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/main-script.js') }}"></script>
   </body>
 </html>

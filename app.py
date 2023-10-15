@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -46,6 +46,14 @@ class ParentBooking(db.Model):
 @app.route("/")
 def index():
     return render_template("index.html")
+
+@app.route('/bookappointment', methods=['GET', 'POST'])
+def book_appointment():
+    if request.method == 'POST':
+        booking = request.get_json()
+        # Do something with booking (e.g., save to database)
+        print(booking)
+        return render_template('bookingform.html', booking=booking)
 
 if __name__ == "__main__":
     app.run(debug=True)
