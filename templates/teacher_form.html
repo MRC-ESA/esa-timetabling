@@ -22,12 +22,20 @@
 
         <label for="image">Profile Image:</label>
         <input type="file" name="image" />
-        {% if teacher and teacher.image_filename %}
-        <img
-          src="{{ url_for('static', filename='images/teachers/' + teacher.image_filename) }}"
-          width="100"
-        /><br />
-        {% endif %}
+        <div class="image-preview">
+          {% if teacher and teacher.image_filename %}
+          <img
+            src="{{ url_for('static', filename='images/teachers/' + teacher.image_filename) }}"
+            width="100"
+          />
+          {% else %}
+          <img
+            src="{{ url_for('static', filename='images/default-placeholder.png') }}"
+            width="100"
+          />
+          {% endif %}
+          <p>Profile image</p>
+        </div>
 
         <input type="submit" value="Submit" class="submit-button" />
       </form>

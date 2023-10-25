@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, redirect
+from flask import Flask, render_template, request, jsonify, redirect, url_for, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 import os
 from werkzeug.utils import secure_filename
@@ -102,7 +102,7 @@ def create_or_edit_teacher():
         db.session.add(teacher)
         db.session.commit()
 
-        return redirect(url_for('create_or_edit_teacher'))
+        return redirect(url_for('show_teacher', teacher_id=teacher.id))
 
     return render_template('teacher_form.html', teacher=teacher)
 
@@ -110,6 +110,12 @@ def create_or_edit_teacher():
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
+
+@app.route('/teacher/<int:teacher_id>', methods=['GET'])
+def show_teacher(teacher_id):
+    teacher = Teacher.query.get_or_404(teacher_id)
+    return render_template('teacherprofile.html', teacher=teacher)
 
 
 if __name__ == "__main__":
