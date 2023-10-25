@@ -3,7 +3,7 @@
 
 // Get the button element for booking and store it in the variable 'bookingBtn'
 const bookingBtn = document.getElementById('book-appointment');
-
+const findTeacherBtn = document.getElementById('find-teacher');
 // Asynchronous function to send the booking data to the server
 async function sendBooking(newBooking) {
   try {
@@ -102,4 +102,15 @@ bookingBtn.addEventListener('click', function () {
 
   // Resetting the form to clear the input fields
   document.getElementById('booking-form').reset();
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+  const form = document.getElementById('teacherForm');
+
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+    const teacherName = document.getElementById('teacher_name').value;
+    const encodedName = encodeURIComponent(teacherName).replace(/\+/g, '%20');
+    window.location.href = `/show_appointments/${encodedName}`;
+  });
 });

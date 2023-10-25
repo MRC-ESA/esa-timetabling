@@ -1,9 +1,19 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, redirect
 from flask_sqlalchemy import SQLAlchemy
+import os
+from werkzeug.utils import secure_filename
+
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///bookings.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['UPLOAD_FOLDER'] = 'static/images/teachers'
 db = SQLAlchemy(app)
 
 
@@ -14,6 +24,14 @@ class Booking(db.Model):
     teacher = db.Column(db.String(80))
     date = db.Column(db.String(10))
     time = db.Column(db.String(10))
+
+
+class Teacher(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), nullable=False)
+    subject = db.Column(db.String(80), nullable=False)
+    department = db.Column(db.String(80), nullable=False)
+    image_filename = db.Column(db.String(120), nullable=True)
 
 
 @app.route("/")
@@ -63,6 +81,35 @@ def book_appointment():
 def show_appointments(teacher_name):
     appointments = Booking.query.filter_by(teacher=teacher_name).all()
     return render_template('appointments.html', appointments=appointments)
+
+
+@app.route('/teacher', methods=['GET', 'POST'])
+def create_or_edit_teacher():
+    teacher = None
+    if request.method == 'POST':
+        name = request.form.get('name')
+        subject = request.form.get('subject')
+        department = request.form.get('department')
+        image = request.files.get('image')
+        filename = None
+
+        if image and allowed_file(image.filename):
+            filename = secure_filename(image.filename)
+            image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+        teacher = Teacher(name=name, subject=subject,
+                          department=department, image_filename=filename)
+        db.session.add(teacher)
+        db.session.commit()
+
+        return redirect(url_for('create_or_edit_teacher'))
+
+    return render_template('teacher_form.html', teacher=teacher)
+
+
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 
 if __name__ == "__main__":
