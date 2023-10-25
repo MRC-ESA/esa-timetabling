@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Appointments</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles/appointments.css') }}"
+    />
+  </head>
+  <body>
+    <h1>Appointments</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Parent Name</th>
+          <th>Student Name</th>
+          <th>Teacher</th>
+          <th>Date</th>
+          <th>Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for appointment in appointments %}
+        <tr>
+          <td>{{ appointment.parent_name }}</td>
+          <td>{{ appointment.student_name }}</td>
+          <td>{{ appointment.teacher }}</td>
+          <td>{{ appointment.date }}</td>
+          <td>{{ appointment.time }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </body>
+</html>

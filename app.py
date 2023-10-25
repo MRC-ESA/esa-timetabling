@@ -6,6 +6,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///bookings.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
+
 class Booking(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     parent_name = db.Column(db.String(80))
@@ -19,12 +20,13 @@ class Booking(db.Model):
 def index():
     return render_template("index.html")
 
+
 @app.route('/bookappointment', methods=['GET', 'POST'])
 def book_appointment():
     if request.method == 'POST':
         # Accessing form data
-        parent = request.form.get('parentName')
-        student = request.form.get('studentName')
+        parent = request.form.get('parent-name')
+        student = request.form.get('student-name')
         teacher = request.form.get('teacher')
         date = request.form.get('date')
         time = request.form.get('time')
@@ -41,7 +43,7 @@ def book_appointment():
         # Adding the new booking to the database
         db.session.add(new_booking)
         db.session.commit()
-        
+
         # Creating a dictionary to be JSONified
         booking_data = {
             'id': new_booking.id,
@@ -55,6 +57,12 @@ def book_appointment():
 
     # Handling GET request
     return render_template('index.html')
+
+
+@app.route('/show_appointments/<string:teacher_name>', methods=['GET'])
+def show_appointments(teacher_name):
+    appointments = Booking.query.filter_by(teacher=teacher_name).all()
+    return render_template('appointments.html', appointments=appointments)
 
 
 if __name__ == "__main__":

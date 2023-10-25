@@ -16,9 +16,16 @@
     <title>Parents Evening Booking</title>
   </head>
   <body>
+    <h2>Enter Teacher's Name</h2>
+    <form action="/show_appointments/" method="get">
+      <label for="teacher_name">Teacher Name:</label>
+      <input type="text" id="teacher_name" name="teacher_name" required />
+      <button type="submit">Show Appointments</button>
+    </form>
+
     <div class="container">
       <h1>Parents Evening Booking Form</h1>
-      <form id="booking-form">
+      <form id="booking-form" action="/">
         <label for="parent-name">Parent Name:</label>
         <input type="text" id="parent-name" name="parent-name" required />
 
