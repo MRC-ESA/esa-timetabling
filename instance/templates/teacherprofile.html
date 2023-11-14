@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Teacher Profile</title>
+  </head>
+  <body>
+    <h2>{{ teacher.name }}</h2>
+    <p>Subject: {{ teacher.subject }}</p>
+    <p>Department: {{ teacher.department }}</p>
+    {% if teacher.image_filename %}
+    <img
+      src="{{ url_for('static', filename='images/teachers/' + teacher.image_filename) }}"
+      width="100"
+    /><br />
+    {% endif %}
+    <a href="{{ url_for('create_or_edit_teacher') }}">Edit Profile</a>
+  </body>
+</html>

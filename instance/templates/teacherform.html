@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Teacher Profile</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles/main.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Teacher Profile</h1>
+      <form action="/teacher" method="post" enctype="multipart/form-data">
+        <label for="name">Name:</label>
+        <input type="text" name="name" required /><br />
+
+        <label for="subject">Subject:</label>
+        <input type="text" name="subject" required /><br />
+
+        <label for="department">Department:</label>
+        <input type="text" name="department" required /><br />
+
+        <label for="image">Profile Image:</label>
+        <input type="file" name="image" />
+        <div class="image-preview">
+          {% if teacher and teacher.image_filename %}
+          <img
+            src="{{ url_for('static', filename='images/teachers/' + teacher.image_filename) }}"
+            width="100"
+          />
+          {% else %}
+          <img
+            src="{{ url_for('static', filename='images/default-placeholder.png') }}"
+            width="100"
+          />
+          {% endif %}
+          <p>Profile image</p>
+        </div>
+
+        <input type="submit" value="Submit" class="submit-button" />
+      </form>
+    </div>
+  </body>
+</html>
